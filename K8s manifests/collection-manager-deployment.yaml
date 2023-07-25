@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: collection-manager
+  name: collection-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: collection-manager
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: collection-manager
+    spec:
+      containers:
+        - env:
+            - name: WORKBENCH_AUTHN_APIKEY
+              value: sample-key
+            - name: WORKBENCH_AUTHN_SERVICE_NAME
+              value: collection-manager
+            - name: WORKBENCH_HOST
+              value: http://attack-workbench-rest-api
+          image: collection-manager
+          name: attack-workbench-collection-manager
+          ports:
+            - containerPort: 3001
+          resources: {}
+      restartPolicy: Always
+status: {}

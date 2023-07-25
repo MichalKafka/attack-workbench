@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rest-api
+  name: rest-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rest-api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: rest-api
+    spec:
+      containers:
+        - env:
+            - name: DATABASE_URL
+              value: mongodb://attack-workbench-database/attack-workspace
+            - name: JSON_CONFIG_PATH
+              value: ./resources/rest-api-service-config.json
+            - name: SERVICE_ACCOUNT_APIKEY_ENABLE
+              value: "true"
+          image: rest-api
+          name: attack-workbench-rest-api
+          ports:
+            - containerPort: 3000
+          resources: {}
+          volumeMounts:
+            - mountPath: /usr/src/app/resources/rest-api-service-config.json
+              name: rest-api-claim0
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: rest-api-claim0
+          persistentVolumeClaim:
+            claimName: rest-api-claim0
+            readOnly: true
+status: {}
