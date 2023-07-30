@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - image: kafkins/attack-workbench-frontend:latest
-          name: frontend
+          name: attack-workbench-frontend
           ports:
             - containerPort: 80
           resources: {}
