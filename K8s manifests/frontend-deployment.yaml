@@ -25,8 +25,8 @@ spec:
         io.kompose.service: frontend
     spec:
       containers:
-        - image: frontend
-          name: hub.docker.com/kafkins/attack-workbench-frontend:latest
+        - image: kafkins/attack-workbench-frontend:latest
+          name: frontend
           ports:
             - containerPort: 80
           resources: {}
